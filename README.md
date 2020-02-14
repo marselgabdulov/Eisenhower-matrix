@@ -2,7 +2,7 @@
 
 Read more about [Eisenhower matrix](https://www.eisenhower.me/eisenhower-matrix/)
 
-There are form for creating task, list of unordered tasks and four quadrants(Do First, Schedule, Delegate, Don’t Do).
+There are form for creating task, list of unordered tasks and four quadrants (Do First, Schedule, Delegate, Don’t Do).
 
 ## User story
 
