@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Form from './components/Form';
-import UnorderedTasks from './components/UnorderedTasks';
+import TaskList from './components/TaskList';
 import TasksState from './context/tasks/TasksState';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <div className='App'>
         <h1>Eisenhower matrix</h1>
         <Form />
-        <UnorderedTasks />
+        <TaskList />
       </div>
     </TasksState>
   );

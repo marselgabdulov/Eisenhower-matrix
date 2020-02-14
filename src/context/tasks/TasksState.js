@@ -3,7 +3,12 @@ import TasksContext from './tasksContext';
 import tasksReducer from './tasksReducer';
 import _uniqueId from 'lodash/uniqueId';
 
-import { CREATE_TASK, DELETE_TASK, SET_UNORDERED } from '../types';
+import {
+  CREATE_TASK,
+  DELETE_TASK,
+  SET_TASK_PRIORITY,
+  SET_UNORDERED
+} from '../types';
 
 const TasksState = props => {
   const initialState = {
@@ -14,9 +19,9 @@ const TasksState = props => {
 
   // Set unordered tasks
   function setUnorderedTasks() {
-    let unordered = localStorage.getItem('tasks');
-    if (unordered !== null) {
-      dispatch({ type: SET_UNORDERED, payload: JSON.parse(unordered) });
+    let tasks = localStorage.getItem('tasks');
+    if (tasks !== null) {
+      dispatch({ type: SET_UNORDERED, payload: JSON.parse(tasks) });
     } else {
       dispatch({ type: SET_UNORDERED, payload: [] });
     }
@@ -34,6 +39,18 @@ const TasksState = props => {
     );
   }
 
+  // Change task's priority
+  function setTaskPriority(taskId, priority) {
+    const newTasks = state.tasks.map(task => {
+      if (task.id === taskId) {
+        task.list = priority;
+      }
+      return task;
+    });
+    dispatch({ type: SET_TASK_PRIORITY, payload: newTasks });
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  }
+
   // Delete task
   function deleteTask(taskId) {
     const newTasks = state.tasks.filter(task => task.id !== taskId);
@@ -48,6 +65,7 @@ const TasksState = props => {
         tasks: state.tasks,
         addTask,
         deleteTask,
+        setTaskPriority,
         setUnorderedTasks
       }}
     >

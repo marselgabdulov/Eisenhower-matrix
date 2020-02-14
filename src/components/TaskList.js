@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import TasksContext from '../context/tasks/tasksContext';
 import Task from './Task';
 
-function UnorderedTasks() {
+function TaskList() {
   const tasksContext = useContext(TasksContext);
   const { tasks, setUnorderedTasks } = tasksContext;
 
@@ -25,4 +25,4 @@ function UnorderedTasks() {
   );
 }
 
-export default UnorderedTasks;
+export default TaskList;

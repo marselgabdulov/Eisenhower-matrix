@@ -1,4 +1,9 @@
-import { CREATE_TASK, DELETE_TASK, SET_UNORDERED } from '../types';
+import {
+  CREATE_TASK,
+  DELETE_TASK,
+  SET_TASK_PRIORITY,
+  SET_UNORDERED
+} from '../types';
 import _uniqueId from 'lodash/uniqueId';
 
 export default (state, action) => {
@@ -15,6 +20,10 @@ export default (state, action) => {
         ]
       };
     case DELETE_TASK:
+      return {
+        tasks: action.payload
+      };
+    case SET_TASK_PRIORITY:
       return {
         tasks: action.payload
       };
