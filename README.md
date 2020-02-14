@@ -1,3 +1,18 @@
+# Eisenhower matrix
+
+Read more about [Eisenhower matrix](https://www.eisenhower.me/eisenhower-matrix/)
+
+There are form for creating task, list of unordered tasks and four quadrants(Do First, Schedule, Delegate, Don’t Do).
+
+## User story
+
+- User can create new task
+- User can edit task
+- User can delete task
+- User can move task between quadrants
+
+Save tasks in LocalStorage.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
