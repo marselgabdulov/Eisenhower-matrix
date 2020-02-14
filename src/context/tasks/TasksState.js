@@ -3,7 +3,7 @@ import TasksContext from './tasksContext';
 import tasksReducer from './tasksReducer';
 import _uniqueId from 'lodash/uniqueId';
 
-import { CREATE_TASK, SET_UNORDERED } from '../types';
+import { CREATE_TASK, DELETE_TASK, SET_UNORDERED } from '../types';
 
 const TasksState = props => {
   const initialState = {
@@ -34,11 +34,20 @@ const TasksState = props => {
     );
   }
 
+  // Delete task
+  function deleteTask(taskId) {
+    const newTasks = state.tasks.filter(task => task.id !== taskId);
+    dispatch({ type: DELETE_TASK, payload: newTasks });
+
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  }
+
   return (
     <TasksContext.Provider
       value={{
         tasks: state.tasks,
         addTask,
+        deleteTask,
         setUnorderedTasks
       }}
     >

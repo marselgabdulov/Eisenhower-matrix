@@ -1,4 +1,4 @@
-import { CREATE_TASK, SET_UNORDERED } from '../types';
+import { CREATE_TASK, DELETE_TASK, SET_UNORDERED } from '../types';
 import _uniqueId from 'lodash/uniqueId';
 
 export default (state, action) => {
@@ -13,6 +13,10 @@ export default (state, action) => {
           ...state.tasks,
           { id: _uniqueId(), list: 'unordered', task: action.payload }
         ]
+      };
+    case DELETE_TASK:
+      return {
+        tasks: action.payload
       };
     default:
       return state;
