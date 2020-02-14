@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import TasksContext from '../context/tasks/tasksContext';
+import Task from './Task';
 
 function UnorderedTasks() {
   const tasksContext = useContext(TasksContext);
@@ -16,7 +17,9 @@ function UnorderedTasks() {
         {tasks &&
           tasks
             .filter(task => task.list === 'unordered')
-            .map(task => <li key={task.id}>{task.task}</li>)}
+            .map(task => (
+              <Task key={task.id} body={task.task} taskId={task.id} />
+            ))}
       </ul>
     </>
   );
