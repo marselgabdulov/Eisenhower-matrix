@@ -1,14 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import TasksContext from '../context/tasks/tasksContext';
 
 function Form() {
   const tasksContext = useContext(TasksContext);
-  const { addTask, setTasks } = tasksContext;
+  const { addTask } = tasksContext;
   const [newTask, setNewTask] = useState('');
-
-  useEffect(() => {
-    setTasks();
-  }, []);
 
   return (
     <form
