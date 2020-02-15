@@ -26,7 +26,7 @@
 .button,
 .input,
 .priority {
-  box-shadow: 0.5em 0.5em #555;
+  box-shadow: 0.25em 0.25em #555;
 }
 
 .button {
@@ -62,6 +62,7 @@
 }
 
 .task {
+  margin-top: 1em;
   display: flex;
   justify-content: space-between;
   width: 420px;

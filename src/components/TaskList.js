@@ -1,25 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import TasksContext from '../context/tasks/tasksContext';
 import Task from './Task';
 
-function TaskList() {
+function TaskList({ priority }) {
   const tasksContext = useContext(TasksContext);
-  const { tasks, setUnorderedTasks } = tasksContext;
-
-  useEffect(() => {
-    setUnorderedTasks();
-  }, []);
+  const { getTaskList } = tasksContext;
 
   return (
     <div className='task-list'>
-      <h3 className='task-list__title'>Unordered Tasks</h3>
+      <h3 className='task-list__title'>{priority} Tasks</h3>
       <ul>
-        {tasks &&
-          tasks
-            .filter(task => task.list === 'unordered')
-            .map(task => (
-              <Task key={task.id} body={task.task} taskId={task.id} />
-            ))}
+        {getTaskList(priority).map(task => (
+          <Task key={task.id} body={task.task} taskId={task.id} />
+        ))}
       </ul>
     </div>
   );

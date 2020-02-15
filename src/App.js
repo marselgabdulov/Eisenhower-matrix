@@ -12,7 +12,13 @@ function App() {
           <h1 className='app-title'>Eisenhower matrix</h1>
           <Form />
         </div>
-        <TaskList />
+        <TaskList priority='unordered' />
+        <div className='matrix'>
+          <TaskList priority='do first' />
+          <TaskList priority='schedule' />
+          <TaskList priority='delegate' />
+          <TaskList priority="don't do" />
+        </div>
       </div>
     </TasksState>
   );
