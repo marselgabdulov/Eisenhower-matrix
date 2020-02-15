@@ -8,6 +8,7 @@ function Form() {
 
   return (
     <form
+      className='form'
       onSubmit={e => {
         addTask(newTask);
         setNewTask('');
@@ -15,6 +16,7 @@ function Form() {
       }}
     >
       <input
+        className='input'
         type='text'
         name='newTask'
         value={newTask}
@@ -22,7 +24,7 @@ function Form() {
         placeholder='add task'
         onChange={e => setNewTask(e.target.value)}
       />
-      <input type='submit' value='add task' />
+      <input type='submit' value='add task' className='button create' />
     </form>
   );
 }

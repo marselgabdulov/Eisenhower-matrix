@@ -14,18 +14,17 @@ function Task({ body, taskId }) {
 
   return (
     <div className='task'>
-      <span>{body}</span> <label htmlFor='priority'>Choose priority: </label>
-      <select id='priority' onChange={e => handleChange(e.target.value)}>
+      <div className='task-body'>{body}</div>{' '}
+      <select className='priority' onChange={e => handleChange(e.target.value)}>
         <option value='do first'>Do First</option>
         <option value='schedule'>Schedule</option>
         <option value='delegate'>Delegate</option>
         <option value="don't do">Don’t Do</option>
         <option value='unordered'>Unordered</option>
       </select>
-      <button className='delete-task' onClick={() => deleteTask(taskId)}>
+      <button className='button delete' onClick={() => deleteTask(taskId)}>
         delete
       </button>
-      <p>Priority: {priority}</p>
     </div>
   );
 }

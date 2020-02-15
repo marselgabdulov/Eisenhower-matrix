@@ -11,8 +11,8 @@ function TaskList() {
   }, []);
 
   return (
-    <>
-      <h3>Unordered Tasks</h3>
+    <div className='task-list'>
+      <h3 className='task-list__title'>Unordered Tasks</h3>
       <ul>
         {tasks &&
           tasks
@@ -21,7 +21,7 @@ function TaskList() {
               <Task key={task.id} body={task.task} taskId={task.id} />
             ))}
       </ul>
-    </>
+    </div>
   );
 }
 
