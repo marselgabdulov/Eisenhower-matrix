@@ -2,7 +2,8 @@ import {
   CREATE_TASK,
   DELETE_TASK,
   SET_TASK_PRIORITY,
-  SET_TASKS
+  SET_TASKS,
+  CLEAR_ALL
 } from '../types';
 
 export default (state, action) => {
@@ -20,6 +21,10 @@ export default (state, action) => {
         tasks: action.payload
       };
     case SET_TASKS:
+      return {
+        tasks: action.payload
+      };
+    case CLEAR_ALL:
       return {
         tasks: action.payload
       };

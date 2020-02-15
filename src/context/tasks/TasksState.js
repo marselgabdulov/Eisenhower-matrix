@@ -1,13 +1,13 @@
 import React, { useReducer } from 'react';
 import TasksContext from './tasksContext';
 import tasksReducer from './tasksReducer';
-import _uniqueId from 'lodash/uniqueId';
 
 import {
   CREATE_TASK,
   DELETE_TASK,
   SET_TASK_PRIORITY,
-  SET_TASKS
+  SET_TASKS,
+  CLEAR_ALL
 } from '../types';
 
 const TasksState = props => {
@@ -43,13 +43,13 @@ const TasksState = props => {
   function addTask(newTask) {
     dispatch({
       type: CREATE_TASK,
-      payload: { id: _uniqueId(), priority: 'unordered', task: newTask }
+      payload: { id: Date.now(), priority: 'unordered', task: newTask }
     });
     localStorage.setItem(
       'tasks',
       JSON.stringify([
         ...state.tasks,
-        { id: _uniqueId(), priority: 'unordered', task: newTask }
+        { id: Date.now(), priority: 'unordered', task: newTask }
       ])
     );
   }
@@ -73,6 +73,12 @@ const TasksState = props => {
     localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
+  // Clear app state and local storage
+  function clearAll() {
+    dispatch({ type: CLEAR_ALL, payload: [] });
+    localStorage.clear();
+  }
+
   return (
     <TasksContext.Provider
       value={{
@@ -81,7 +87,8 @@ const TasksState = props => {
         deleteTask,
         setTaskPriority,
         setTasks,
-        getTaskList
+        getTaskList,
+        clearAll
       }}
     >
       {props.children}
