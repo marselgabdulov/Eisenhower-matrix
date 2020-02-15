@@ -7,7 +7,7 @@ import {
   CREATE_TASK,
   DELETE_TASK,
   SET_TASK_PRIORITY,
-  SET_UNORDERED
+  SET_TASK_LIST
 } from '../types';
 
 const TasksState = props => {
@@ -17,13 +17,16 @@ const TasksState = props => {
 
   const [state, dispatch] = useReducer(tasksReducer, initialState);
 
-  // Set unordered tasks
-  function setUnorderedTasks() {
-    let tasks = localStorage.getItem('tasks');
+  // Set task list by priority
+  function setTaskList(priority) {
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
     if (tasks !== null) {
-      dispatch({ type: SET_UNORDERED, payload: JSON.parse(tasks) });
+      dispatch({
+        type: SET_TASK_LIST,
+        payload: tasks.filter(task => task.priority === priority)
+      });
     } else {
-      dispatch({ type: SET_UNORDERED, payload: [] });
+      dispatch({ type: SET_TASK_LIST, payload: [] });
     }
   }
 
@@ -34,7 +37,7 @@ const TasksState = props => {
       'tasks',
       JSON.stringify([
         ...state.tasks,
-        { id: _uniqueId(), list: 'unordered', task: newTask }
+        { id: _uniqueId(), priority: 'unordered', task: newTask }
       ])
     );
   }
@@ -43,7 +46,7 @@ const TasksState = props => {
   function setTaskPriority(taskId, priority) {
     const newTasks = state.tasks.map(task => {
       if (task.id === taskId) {
-        task.list = priority;
+        task.priority = priority;
       }
       return task;
     });
@@ -66,7 +69,7 @@ const TasksState = props => {
         addTask,
         deleteTask,
         setTaskPriority,
-        setUnorderedTasks
+        setTaskList
       }}
     >
       {props.children}
