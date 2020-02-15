@@ -3,30 +3,23 @@ import {
   DELETE_TASK,
   SET_TASK_PRIORITY,
   SET_TASKS,
-  CLEAR_ALL
+  CLEAR_ALL,
+  EDIT_TASK
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
-    case CREATE_TASK:
-      return {
-        tasks: [...state.tasks, action.payload]
-      };
     case DELETE_TASK:
-      return {
-        tasks: action.payload
-      };
     case SET_TASK_PRIORITY:
-      return {
-        tasks: action.payload
-      };
+    case EDIT_TASK:
     case SET_TASKS:
-      return {
-        tasks: action.payload
-      };
     case CLEAR_ALL:
       return {
         tasks: action.payload
+      };
+    case CREATE_TASK:
+      return {
+        tasks: [...state.tasks, action.payload]
       };
     default:
       return state;

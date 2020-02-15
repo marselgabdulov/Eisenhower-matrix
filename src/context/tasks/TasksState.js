@@ -7,7 +7,8 @@ import {
   DELETE_TASK,
   SET_TASK_PRIORITY,
   SET_TASKS,
-  CLEAR_ALL
+  CLEAR_ALL,
+  EDIT_TASK
 } from '../types';
 
 const TasksState = props => {
@@ -54,6 +55,18 @@ const TasksState = props => {
     );
   }
 
+  // Edit task text
+  function editTask(taskId, text) {
+    const newTasks = state.tasks.map(task => {
+      if (task.id === taskId) {
+        task.task = text;
+      }
+      return task;
+    });
+    dispatch({ type: EDIT_TASK, payload: newTasks });
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  }
+
   // Change task's priority
   function setTaskPriority(taskId, priority) {
     const newTasks = state.tasks.map(task => {
@@ -88,7 +101,8 @@ const TasksState = props => {
         setTaskPriority,
         setTasks,
         getTaskList,
-        clearAll
+        clearAll,
+        editTask
       }}
     >
       {props.children}

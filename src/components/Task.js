@@ -1,24 +1,42 @@
 import React, { useContext } from 'react';
 import TasksContext from '../context/tasks/tasksContext';
 import { ReactComponent as Trash } from './trash.svg';
+import EditableLabel from 'react-inline-editing';
 
-function Task({ body, taskId, taskPriority }) {
+function Task({ body, taskId }) {
   const tasksContext = useContext(TasksContext);
-  const { deleteTask, setTaskPriority } = tasksContext;
+  const { deleteTask, setTaskPriority, editTask } = tasksContext;
 
-  function handleChange(payload) {
-    setTaskPriority(taskId, payload);
+  function handleChange(priority) {
+    setTaskPriority(taskId, priority);
   }
+
+  function handleFocusOut(text) {
+    editTask(taskId, text);
+  }
+
   return (
     <div className='task'>
-      <div className='task-body'>{body}</div>{' '}
+      <EditableLabel
+        text={body}
+        labelClassName='task-body'
+        inputClassName='task-body'
+        inputWidth='220px'
+        inputHeight='1em'
+        inputMaxLength={50}
+        labelFontWeight='bold'
+        inputFontWeight='bold'
+        inputFontSize='1em'
+        onFocusOut={handleFocusOut}
+      />
       <select
+        className='select-priority'
         onChange={e => {
           handleChange(e.target.value);
         }}
       >
-        <option value=''>Choose priority</option>
-        <option value='do first'></option>
+        <option value=''>Priority</option>
+        <option value='do first'>Do first</option>
         <option value='schedule'>Schedule</option>
         <option value='delegate'>Delegate</option>
         <option value="don't do">Don’t Do</option>
