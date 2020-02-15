@@ -8,7 +8,8 @@ import {
   SET_TASK_PRIORITY,
   SET_TASKS,
   CLEAR_ALL,
-  EDIT_TASK
+  EDIT_TASK,
+  SET_DONE
 } from '../types';
 
 const TasksState = props => {
@@ -44,13 +45,18 @@ const TasksState = props => {
   function addTask(newTask) {
     dispatch({
       type: CREATE_TASK,
-      payload: { id: Date.now(), priority: 'unordered', task: newTask }
+      payload: {
+        id: Date.now(),
+        priority: 'unordered',
+        task: newTask,
+        done: false
+      }
     });
     localStorage.setItem(
       'tasks',
       JSON.stringify([
         ...state.tasks,
-        { id: Date.now(), priority: 'unordered', task: newTask }
+        { id: Date.now(), priority: 'unordered', task: newTask, done: false }
       ])
     );
   }
@@ -79,6 +85,18 @@ const TasksState = props => {
     localStorage.setItem('tasks', JSON.stringify(newTasks));
   }
 
+  // Mark task as done
+  function setDone(taskId, isDone) {
+    const newTasks = state.tasks.map(task => {
+      if (task.id === taskId) {
+        task.done = isDone;
+      }
+      return task;
+    });
+    dispatch({ type: SET_DONE, payload: newTasks });
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  }
+
   // Delete task
   function deleteTask(taskId) {
     const newTasks = state.tasks.filter(task => task.id !== taskId);
@@ -102,7 +120,8 @@ const TasksState = props => {
         setTasks,
         getTaskList,
         clearAll,
-        editTask
+        editTask,
+        setDone
       }}
     >
       {props.children}

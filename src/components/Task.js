@@ -3,9 +3,9 @@ import TasksContext from '../context/tasks/tasksContext';
 import { ReactComponent as Trash } from './trash.svg';
 import EditableLabel from 'react-inline-editing';
 
-function Task({ body, taskId }) {
+function Task({ body, taskId, isDone }) {
   const tasksContext = useContext(TasksContext);
-  const { deleteTask, setTaskPriority, editTask } = tasksContext;
+  const { deleteTask, setTaskPriority, editTask, setDone } = tasksContext;
 
   function handleChange(priority) {
     setTaskPriority(taskId, priority);
@@ -15,8 +15,18 @@ function Task({ body, taskId }) {
     editTask(taskId, text);
   }
 
+  function handleDone() {
+    setDone(taskId, !isDone);
+  }
+
   return (
     <div className='task'>
+      <div
+        className='done-marker'
+        style={{ display: isDone ? 'block' : 'none' }}
+      >
+        <div className='done-line'></div>
+      </div>
       <EditableLabel
         text={body}
         labelClassName='task-body'
@@ -42,6 +52,10 @@ function Task({ body, taskId }) {
         <option value="don't do">Don’t Do</option>
         <option value='unordered'>Unordered</option>
       </select>
+      <label className='done-container'>
+        <input type='checkbox' onChange={handleDone} />
+        <span className='checkmark'></span>
+      </label>
       <button className='task-button' onClick={() => deleteTask(taskId)}>
         <Trash />
       </button>
