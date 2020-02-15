@@ -18,11 +18,12 @@ function Task({ body, taskId }) {
           handleChange(e.target.value);
         }}
       >
-        <option value='unordered'>Unordered</option>
+        <option value=''>Choose priority</option>
         <option value='do first'>Do First</option>
         <option value='schedule'>Schedule</option>
         <option value='delegate'>Delegate</option>
         <option value="don't do">Don’t Do</option>
+        <option value='unordered'>Unordered</option>
       </select>
       <button className='button delete' onClick={() => deleteTask(taskId)}>
         delete
