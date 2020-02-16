@@ -10,6 +10,8 @@ There are form for creating task, list of unordered tasks and four quadrants (Do
 - User can edit task
 - User can delete task
 - User can move task between quadrants
+- User can mark task as done
+- User can clear all tasks
 
 Save tasks in LocalStorage.
 
