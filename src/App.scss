@@ -205,12 +205,12 @@
 }
 
 /* On mouse-over, add a grey background color */
-.done-container:hover input ~ .checkmark {
+.done-container:hover input~.checkmark {
   background-color: white;
 }
 
 /* When the checkbox is checked, add a blue background */
-.done-container input:checked ~ .checkmark {
+.done-container input:checked~.checkmark {
   background-color: white;
 }
 
@@ -222,7 +222,7 @@
 }
 
 /* Show the checkmark when checked */
-.done-container input:checked ~ .checkmark:after {
+.done-container input:checked~.checkmark:after {
   display: block;
 }
 
@@ -311,6 +311,7 @@
     height: auto;
 
     .task-list {
+      min-height: 50vh;
       height: 100%;
     }
   }
@@ -382,6 +383,7 @@
     height: auto;
 
     .task-list {
+      min-height: 40vh;
       height: 100%;
     }
   }
@@ -453,6 +455,7 @@
     height: auto;
 
     .task-list {
+      min-height: 50vh;
       height: 100%;
     }
   }
