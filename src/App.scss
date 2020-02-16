@@ -24,6 +24,18 @@
   }
 }
 
+.edit-error {
+  color: red;
+  position: absolute;
+  top: 2.7em;
+  right: 40%;
+  border: 1px solid red;
+  padding: 10px;
+  box-shadow: 0.5em 0.5em #b60202;
+  background-color: #fff;
+  z-index: 1000;
+}
+
 .app-head {
   display: flex;
   flex-direction: column;
@@ -205,12 +217,12 @@
 }
 
 /* On mouse-over, add a grey background color */
-.done-container:hover input~.checkmark {
+.done-container:hover input ~ .checkmark {
   background-color: white;
 }
 
 /* When the checkbox is checked, add a blue background */
-.done-container input:checked~.checkmark {
+.done-container input:checked ~ .checkmark {
   background-color: white;
 }
 
@@ -222,7 +234,7 @@
 }
 
 /* Show the checkmark when checked */
-.done-container input:checked~.checkmark:after {
+.done-container input:checked ~ .checkmark:after {
   display: block;
 }
 

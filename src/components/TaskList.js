@@ -13,7 +13,7 @@ function TaskList({ priority }) {
         {getTaskList(priority).map(task => (
           <Task
             key={task.id}
-            body={task.task}
+            taskBody={task.task}
             taskId={task.id}
             taskPriority={task.priority}
             isDone={task.done}

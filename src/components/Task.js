@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import TasksContext from '../context/tasks/tasksContext';
 import { ReactComponent as Trash } from './trash.svg';
 import EditableLabel from 'react-inline-editing';
 
-function Task({ body, taskId, isDone }) {
+function Task({ taskBody, taskId, isDone }) {
+  const [errorVisible, setErrorVisible] = useState(false);
   const tasksContext = useContext(TasksContext);
   const { deleteTask, setTaskPriority, editTask, setDone } = tasksContext;
 
@@ -12,7 +13,12 @@ function Task({ body, taskId, isDone }) {
   }
 
   function handleFocusOut(text) {
-    editTask(taskId, text);
+    if (text.length === 0) {
+      setErrorVisible(true);
+    } else {
+      setErrorVisible(false);
+      editTask(taskId, text);
+    }
   }
 
   function handleDone() {
@@ -28,7 +34,7 @@ function Task({ body, taskId, isDone }) {
         <div className='done-line'></div>
       </div>
       <EditableLabel
-        text={body}
+        text={taskBody}
         labelClassName='task-body'
         inputClassName='task-body'
         inputWidth='100% !important'
@@ -37,8 +43,15 @@ function Task({ body, taskId, isDone }) {
         labelFontWeight='bold'
         inputFontWeight='bold'
         inputFontSize='1em'
+        onFocus={() => setErrorVisible(false)}
         onFocusOut={handleFocusOut}
       />
+      <div
+        className='edit-error'
+        style={{ display: errorVisible ? 'block' : 'none' }}
+      >
+        Task can't be empty
+      </div>
       <select
         className='select-priority'
         onChange={e => {
