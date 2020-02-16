@@ -31,7 +31,7 @@ function Task({ body, taskId, isDone }) {
         text={body}
         labelClassName='task-body'
         inputClassName='task-body'
-        inputWidth='220px'
+        inputWidth='100% !important'
         inputHeight='1em'
         inputMaxLength={50}
         labelFontWeight='bold'

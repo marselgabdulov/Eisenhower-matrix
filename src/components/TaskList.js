@@ -8,7 +8,7 @@ function TaskList({ priority }) {
 
   return (
     <div className='task-list'>
-      <h3 className='task-list__title'>{priority} Tasks</h3>
+      <h3 className='task-list__title'>{priority}</h3>
       <ul>
         {getTaskList(priority).map(task => (
           <Task
@@ -16,6 +16,7 @@ function TaskList({ priority }) {
             body={task.task}
             taskId={task.id}
             taskPriority={task.priority}
+            isDone={task.done}
           />
         ))}
       </ul>

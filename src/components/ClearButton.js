@@ -6,7 +6,7 @@ function ClearButton() {
   const { clearAll } = tasksContext;
 
   return (
-    <button className='button' onClick={clearAll}>
+    <button className='button delete' onClick={clearAll}>
       Clear All
     </button>
   );

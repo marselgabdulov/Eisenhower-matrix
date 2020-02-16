@@ -1,83 +1,97 @@
-.app {
-  display: grid;
-  margin-left: 1%;
-  grid-template-columns: 24% 10% 32.5% 31.5%;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "head head head head"
-    "unordered . do-first schedule"
-    ". . delegate dont-do";
-}
+.rotate {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 1200;
+  display: none;
 
-.app-title {
-  text-align: center;
+  span {
+    font-size: 1.25em;
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 20px;
+    box-shadow: 0.5em 0.5em black;
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    text-transform: uppercase;
+  }
 }
 
 .app-head {
-  grid-area: head;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2em;
+}
+
+.clear-all {
+  position: fixed;
+  z-index: 1000;
 }
 
 .unordered-list {
-  grid-area: unordered;
+  height: auto;
+  box-shadow: 0.5em 0.5em black;
 }
 
-.do-first-list {
-  grid-area: do-first;
+.app-matrix {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  box-shadow: 0.5em 0.5em black;
 }
 
-.schedule-list {
-  grid-area: schedule;
-}
-
-.delegate-list {
-  grid-area: delegate;
-}
-
-.dont-do-list {
-  grid-area: dont-do;
+.task-list {
+  display: flex;
+  align-items: center;
 }
 
 .form {
-  width: 500px;
   justify-content: space-between;
   display: flex;
 
   .input {
-    width: 350px;
-    height: 1em;
-    padding: 10px;
     outline: none;
     border: 1px solid black;
+    box-shadow: 0.5em 0.5em #383838;
   }
 }
 
-// .task-body,
-// .button,
-// .input,
-// .select-priority,
-// .task-list {
-//   box-shadow: 0.5em 0.5em #555;
-// }
+.app-lists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
 .task-list {
   border: 1px solid black;
-  min-height: 350px;
+}
+
+.task-list__title {
+  text-transform: capitalize;
+  margin-bottom: 0;
 }
 
 .task-button {
   background: transparent;
-  border: none !important;
+  border: 1px solid black;
+  box-shadow: 0.25em 0.25em black;
   outline: none;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
 
   * {
-    width: 1.5em;
-    height: 1.5em;
+    width: 100%;
+    height: 100%;
   }
 
   &:hover {
@@ -86,9 +100,7 @@
 }
 
 .button {
-  width: 100px;
   color: white;
-  border: 1px solid black;
   text-transform: uppercase;
   font-weight: bold;
 
@@ -99,15 +111,19 @@
 
   &:hover {
     cursor: pointer;
-    filter: brightness(95%);
+    filter: brightness(90%);
   }
 
   &.create {
-    background-color: #838181;
+    background-color: #199b02;
+    border: 1px solid #093a01;
+    box-shadow: 0.5em 0.5em #093a01;
   }
 
   &.delete {
-    background-color: #838181;
+    background-color: red;
+    border: 1px solid red;
+    box-shadow: 0.5em 0.5em #700202;
   }
 }
 
@@ -118,21 +134,493 @@
 }
 
 .task {
+  position: relative;
   margin-top: 1em;
   display: flex;
   justify-content: space-between;
-  width: 400px;
-
-  * {
-    border: 1px solid #000;
-  }
+  align-items: center;
+  width: 90%;
 }
 
 .task-body {
-  width: 220px;
+  border: 1px solid #000;
   padding: 10px;
+  display: inline-block;
+  min-width: 80%;
   height: 1em;
+  outline: none;
 
+  box-shadow: 0.5em 0.5em #383838;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.select-priority {}
+.select-priority {
+  border: 1px solid #000;
+  outline: none;
+  height: 3em;
+  box-shadow: 0.5em 0.5em #383838;
+  background-color: #fff;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+//////////////////////////
+.done-container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  margin-top: 12px;
+  margin-right: 10px;
+  margin-left: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.done-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: -1.2em;
+  left: -0.75em;
+  height: 1.5em;
+  width: 1.5em;
+  background-color: white;
+  border: 1px solid black;
+  box-shadow: 0.2em 0.2em black;
+}
+
+/* On mouse-over, add a grey background color */
+.done-container:hover input ~ .checkmark {
+  background-color: white;
+}
+
+/* When the checkbox is checked, add a blue background */
+.done-container input:checked ~ .checkmark {
+  background-color: white;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.done-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.done-container .checkmark:after {
+  left: 0.5em;
+  top: 0em;
+  width: 7px;
+  height: 15px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.done-marker {
+  z-index: 1000;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: 2.5em;
+  background-color: transparent;
+  background-color: rgba(255, 253, 253, 0.5);
+
+  .done-line {
+    margin-top: 25px;
+    margin-left: 2.5%;
+    width: 95%;
+    height: 2px;
+    background-color: black;
+  }
+}
+
+// mobile-landscape
+@media screen and (max-width: 1023px) and (orientation: landscape) {
+  .rotate {
+    display: block;
+  }
+}
+
+// mobile-portrait
+@media (max-width: 599px) and (orientation: portrait) {
+  .app-head {
+    width: 90%;
+    margin: 2.5%;
+
+    .app-title {
+      margin-top: 2em;
+    }
+  }
+
+  .form {
+    width: 90%;
+
+    .input {
+      width: calc(90% - 80px);
+      height: 1em;
+      padding: 10px;
+    }
+  }
+
+  .button {
+    width: 75px;
+    height: 2.75em;
+    padding: 2px;
+  }
+
+  .clear-all {
+    top: 1em;
+    right: 1em;
+  }
+
+  .app-lists {
+    width: 92.5%;
+    margin-top: 2em;
+    margin-left: 2.5%;
+    margin-right: auto;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .unordered-list {
+    width: 100%;
+    min-height: 50vh;
+    height: auto;
+
+    .task-list {
+      height: 100%;
+    }
+  }
+
+  .app-matrix {
+    margin-top: 2em;
+    width: 100%;
+    height: auto;
+
+    .task-list {
+      width: calc(100% - 2px);
+      min-height: 25vh;
+      text-align: center;
+    }
+  }
+
+  .task {
+    width: 330px;
+    margin-left: 0;
+    margin-right: 2em;
+    padding: 0;
+  }
+
+  .task-body {
+    padding: 10px;
+    min-width: 150px;
+  }
+
+  .done-marker {
+    width: 170px;
+  }
+}
+
+// tublet-portrait
+@media (min-width: 600px) and (orientation: portrait) {
+  .form {
+    width: 450px;
+
+    .input {
+      width: 320px;
+      height: 1em;
+      padding: 10px;
+    }
+  }
+
+  .button {
+    width: 80px;
+    height: 2.85em;
+    padding: 5px;
+  }
+
+  .clear-all {
+    top: 5.4em;
+    right: 1.5em;
+  }
+
+  .app-lists {
+    width: 95%;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .unordered-list {
+    width: 100%;
+    min-height: 40vh;
+    height: auto;
+
+    .task-list {
+      height: 100%;
+    }
+  }
+
+  .app-matrix {
+    margin-top: 2em;
+    width: 100%;
+    height: auto;
+
+    .task-list {
+      width: calc(100% - 2px);
+      min-height: 25vh;
+      text-align: center;
+    }
+  }
+
+  .task {
+    width: 500px;
+    margin-left: 0;
+    margin-right: 2em;
+    padding: 0;
+  }
+
+  .task-body {
+    padding: 10px;
+    width: 250px;
+  }
+
+  .done-marker {
+    width: 270px;
+  }
+}
+
+// tablet-landscape
+@media (min-width: 900px) and (orientation: landscape) {
+  .form {
+    width: 500px;
+
+    .input {
+      width: 350px;
+      height: 1em;
+      padding: 10px;
+    }
+  }
+
+  .button {
+    width: 100px;
+    height: 2.85em;
+    padding: 10px;
+  }
+
+  .clear-all {
+    top: 5.5em;
+    right: 2.5%;
+  }
+
+  .app-lists {
+    width: 95%;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .unordered-list {
+    width: 100%;
+    min-height: 50vh;
+    height: auto;
+
+    .task-list {
+      height: 100%;
+    }
+  }
+
+  .app-matrix {
+    margin-top: 2em;
+    width: 100%;
+    height: auto;
+
+    .task-list {
+      width: calc(100% - 2px);
+      min-height: 25vh;
+      text-align: center;
+    }
+  }
+
+  .task {
+    width: 700px;
+    margin-left: 0;
+    margin-right: 2em;
+    padding: 0;
+  }
+
+  .task-body {
+    padding: 10px;
+    width: 450px;
+  }
+
+  .done-marker {
+    width: 470px;
+  }
+}
+
+// desktop/laptop
+@media (min-width: 1200px) {
+  .form {
+    width: 500px;
+
+    .input {
+      width: 350px;
+      height: 1em;
+      padding: 10px;
+    }
+  }
+
+  .button {
+    width: 100px;
+    height: 2.85em;
+    padding: 10px;
+  }
+
+  .clear-all {
+    top: 5.5em;
+    right: 2.5em;
+  }
+
+  .app-lists {
+    width: 95%;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: row;
+    height: auto;
+  }
+
+  .unordered-list {
+    width: 37%;
+    min-height: 70vh;
+    height: auto;
+
+    .task-list {
+      height: 100%;
+    }
+  }
+
+  .app-matrix {
+    width: 60%;
+    height: auto;
+    margin-top: 0;
+
+    .task-list {
+      width: calc(50% - 2px);
+      text-align: center;
+    }
+  }
+
+  .task {
+    width: 425px;
+    margin-left: 0;
+    margin-right: 2em;
+    padding: 0;
+  }
+
+  .task-body {
+    padding: 10px;
+    width: 240px;
+  }
+
+  .done-marker {
+    width: 250px;
+  }
+}
+
+// desktop x-large
+@media (min-width: 1800px) {
+  .form {
+    width: 500px;
+
+    .input {
+      width: 350px;
+      height: 1em;
+      padding: 10px;
+    }
+  }
+
+  .button {
+    width: 100px;
+    height: 2.85em;
+    padding: 10px;
+  }
+
+  .clear-all {
+    top: 5.5em;
+    right: 5%;
+  }
+
+  .app-lists {
+    width: 90%;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: row;
+    height: auto;
+  }
+
+  .unordered-list {
+    width: 30%;
+    min-height: 70vh;
+    height: auto;
+
+    .task-list {
+      height: 100%;
+    }
+  }
+
+  .app-matrix {
+    width: 60%;
+    height: auto;
+
+    .task-list {
+      width: calc(50% - 2px);
+      text-align: center;
+    }
+  }
+
+  .task {
+    width: 470px;
+    margin-left: 0;
+    margin-right: 2em;
+    padding: 0;
+  }
+
+  .task-body {
+    padding: 10px;
+    width: 270px;
+  }
+
+  .done-marker {
+    width: 290px;
+  }
+}
